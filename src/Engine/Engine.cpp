@@ -38,17 +38,19 @@ SDL_Surface* epicsurface = NULL;
 
 SDL_Surface* epicersurface = NULL;
 
+SDL_Surface* BGSurface = NULL;
+
 static Mix_Music *music = NULL;
 
-SDL_FRect estRect;
+SDL_Rect estRect;
 
-SDL_FRect rect;
+SDL_Rect rect;
 
-SDL_FRect rect2;
+SDL_Rect rect2;
 
-SDL_FRect rect3;
+SDL_Rect rect3;
 
-SDL_FRect rectangle;
+SDL_Rect rectangle;
 
 
 void Engine::InitEngine(){
@@ -63,21 +65,21 @@ void Engine::InitEngine(){
     InitWindSurf(&window, &renderer);
     
 
-    std::cout << "Renderer: \n" << SDL_GetRendererName(renderer);
-
 
 }
 
 void Engine::InitWindSurf(SDL_Window **winns, SDL_Renderer **rennie){
     SDL_Init(SDL_INIT_AUDIO);
-    SDL_CreateWindowAndRenderer("Example Purrfect Engine Project", 1280, 720, SDL_WINDOW_RESIZABLE,  winns, rennie);
+    SDL_CreateWindowAndRenderer(1280, 720, SDL_WINDOW_RESIZABLE,  winns, rennie);
+    IMG_Init(IMG_INIT_PNG);
 
+    std::cout << SDL_GetError();
     
 
     
 }
 
-void Engine::LoadBG(std::string image, float x, float y){
+void Engine::LoadBG(std::string image){
 
     std::string image_PNG = "img/" + image + ".png";
 
@@ -85,7 +87,8 @@ void Engine::LoadBG(std::string image, float x, float y){
 
     test23 = SDL_CreateTextureFromSurface(renderer, epicsurface);
 
-    targetBG = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, test23->w, test23->h);
+    targetBG = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, 1280, 720);
+
 
     SDL_SetRenderTarget(renderer, targetBG);
 
@@ -93,14 +96,14 @@ void Engine::LoadBG(std::string image, float x, float y){
 
     SDL_RenderClear(renderer);
 
-    SDL_RenderTexture(renderer, test23, NULL, NULL);
+    SDL_RenderCopy(renderer, test23, NULL, NULL);
 
-    SDL_GetTextureSize(test23, &rect3.w, &rect3.h);
+    SDL_QueryTexture(test23, NULL, NULL, &rect3.w, &rect3.h);
 
-    rect3.x = x;
-    rect3.y = y;
-    rect3.w = SCREEN_W;
-    rect3.h = SCREEN_H;
+    rect3.x = 0;
+    rect3.y = 0;
+
+    
 
     if(!test23){
         std::cout << "hey kid you didn't do the rendering right\n" << SDL_GetError();
@@ -119,19 +122,18 @@ void Engine::LoadTextbox(std::string image){
 
     TB = SDL_CreateTextureFromSurface(renderer, epicersurface);
 
-    targetTB = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA4444, SDL_TEXTUREACCESS_TARGET, TB->w, TB->h);
-
-    SDL_SetTextureScaleMode(TB, SDL_SCALEMODE_LINEAR);
+    targetTB = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA4444, SDL_TEXTUREACCESS_TARGET, 1280, 720);
 
     SDL_SetRenderTarget(renderer, targetTB);
 
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_TRANSPARENT);
+    SDL_SetTextureBlendMode(targetTB, SDL_BLENDMODE_BLEND);
 
-    SDL_RenderClear(renderer);
+    SDL_RenderCopy(renderer, TB, NULL, NULL);
 
-    SDL_RenderTexture(renderer, TB, NULL, NULL);
 
-    SDL_GetTextureSize(TB, &rectangle.w, &rectangle.h);
+
+    SDL_QueryTexture(TB, NULL, NULL, &rectangle.w, &rectangle.h);
+
 
 
     rectangle.x = 0;
@@ -153,19 +155,18 @@ void Engine::LoadImage(std::string image, float x, float y){
     epicsurface = IMG_Load(image_PNG.c_str());
 
     text2 = SDL_CreateTextureFromSurface(renderer, epicsurface);
-
-    targetTexture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, text2->w, text2->h);
-
+    
+    targetTexture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, 720, 1280);
+    
     SDL_SetRenderTarget(renderer, targetTexture);
 
+    SDL_SetTextureBlendMode(targetTexture, SDL_BLENDMODE_BLEND);
 
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_TRANSPARENT);
 
-    SDL_RenderClear(renderer);
+    SDL_RenderCopy(renderer, text2, NULL, NULL);
 
-    SDL_RenderTexture(renderer, text2, NULL, NULL);
+    SDL_QueryTexture(text2, NULL, NULL, &rect2.w, &rect2.h);
 
-    SDL_GetTextureSize(text2, &rect2.w, &rect2.h);
 
 
     rect2.x = x;
@@ -183,16 +184,16 @@ void Engine::Refresh(){
     
     SDL_RenderClear(renderer);
 
-    SDL_RenderTexture(renderer, targetBG, NULL, &rect3);
+    SDL_RenderCopy(renderer, targetBG, NULL, &rect3);
 
-    SDL_RenderTexture(renderer, targetTexture, NULL, &rect2);
+    SDL_RenderCopy(renderer, targetTexture, NULL, &rect2);
 
-    SDL_RenderTexture(renderer, targetTB, NULL, &rectangle);
+    SDL_RenderCopy(renderer, targetTB, NULL, &rectangle);
 
-    SDL_RenderTexture(renderer, targetLayer2, NULL, &rect);
+    SDL_RenderCopy(renderer, targetLayer2, NULL, &rect);
 
 
-    SDL_SetRenderLogicalPresentation(renderer, 1280, 720, SDL_LOGICAL_PRESENTATION_STRETCH);
+    SDL_RenderSetLogicalSize(renderer, 1280, 720);
 
     SDL_RenderPresent(renderer);
 
@@ -212,6 +213,15 @@ void Engine::ExitGame(){
 
     SDL_DestroyTexture(targetTB);
 
+    IMG_Quit();
+
+    SDL_Quit();
+
+    TTF_Quit();
+
+    SDL_DestroyWindow(window);
+
+
 
 }
 
@@ -223,21 +233,19 @@ void Engine::ShowDialog(std::string dialog, float x, float y){
 
     SDL_Color White = {255, 255, 255};
 
-    SDL_Surface* dialog2 = TTF_RenderText_Blended_Wrapped(Bani, dialog.c_str(), 0, White, 0);
+    SDL_Surface* dialog2 = TTF_RenderText_Blended_Wrapped(Bani, dialog.c_str(), White, 0);
 
     Texture2 = SDL_CreateTextureFromSurface(renderer, dialog2);
 
-    targetLayer2 = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, Texture2->w, Texture2->h);
+    targetLayer2 = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, 720, 1280);
 
     SDL_SetRenderTarget(renderer, targetLayer2);
 
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_TRANSPARENT);
+    SDL_SetTextureBlendMode(targetLayer2, SDL_BLENDMODE_BLEND);
 
-    SDL_RenderClear(renderer);
+    SDL_RenderCopy(renderer, Texture2, NULL, NULL);
 
-    SDL_RenderTexture(renderer, Texture2, NULL, NULL);
-
-    SDL_GetTextureSize(Texture2, &rect.w, &rect.h);
+    SDL_QueryTexture(Texture2, NULL, NULL, &rect.w, &rect.h);
 
     
 
@@ -251,30 +259,17 @@ void Engine::ShowDialog(std::string dialog, float x, float y){
 }
 
 void Engine::PlayMusic(std::string mus){
-    Mix_Init(MIX_INIT_FLAC);
-    SDL_AudioSpec spec;
-    spec.freq = MIX_DEFAULT_FREQUENCY;
-    spec.format = MIX_DEFAULT_FORMAT;
-    spec.channels = MIX_DEFAULT_CHANNELS;
+    Mix_Init(MIX_INIT_OGG);
+    if (Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0){
+        std::cout << "Pingus";
+    }
+    music = Mix_LoadMUS(mus.c_str());
 
-    
-
-
-    if(!Mix_OpenAudio(0,&spec)){
+    if(!music){
         std::cout << SDL_GetError();
     }
     else{
-        Mix_QuerySpec(&spec.freq, &spec.format, &spec.channels);
-
-
-        music = Mix_LoadMUS(mus.c_str());
-
-        if(!music){
-            std::cout << SDL_GetError();
-        }
-        else{
-            Mix_PlayMusic(music, 99999);
-        }
+        Mix_PlayMusic(music, 99999);
     }
 }
 

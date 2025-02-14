@@ -6,10 +6,10 @@ CC = clang++
 
 #COMPILER_FLAGS specifies the additional compilation options we're using
 # -w suppresses all warnings
-COMPILER_FLAGS = -w -IGameInclude
+COMPILER_FLAGS = -w -IGameInclude -Isol -I/usr/include/SDL2
 
 #LINKER_FLAGS specifies the libraries we're linking against
-LINKER_FLAGS = -lSDL3 -lSDL3_ttf -lSDL3_image -lSDL3_mixer -llua
+LINKER_FLAGS = -lSDL2 -lSDL2_ttf -lSDL2_image -lSDL2_mixer -llua 
 
 #OBJ_NAME specifies the name of our exectuable
 OBJ_NAME = PurrfectEngine

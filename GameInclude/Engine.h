@@ -1,10 +1,9 @@
 
 #pragma once
-#define SDL_MAIN_USE_CALLBACKS 1 
-#include <SDL3/SDL.h>
-#include <SDL3_image/SDL_image.h>
-#include <SDL3_ttf/SDL_ttf.h>
-#include <SDL3_mixer/SDL_mixer.h>
+#include "SDL.h"
+#include "SDL_image.h"
+#include "SDL_ttf.h"
+#include "SDL_mixer.h"
 #include "sol.hpp"
 #include <string>
 #include <vector>
@@ -45,7 +44,7 @@ public:
 
         static void ShowDialog(std::string dialog,  float x, float y);
 
-        static void LoadBG(std::string image, float x, float y);
+        static void LoadBG(std::string image);
 
         static void LoadTextbox(std::string image);
 

@@ -1,5 +1,5 @@
 
-LoadBG("Hallway", 0, 0)
+LoadBG("Hallway");
 LoadTBox("textbox")
 LoadSprite("O02", 0, 0)
 CharSay("Olive:\n\nHi! Welcome to Purrfect Engine!", 1280 / 4.7, 720 / 1.3)

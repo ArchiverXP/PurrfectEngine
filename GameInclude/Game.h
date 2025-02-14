@@ -1,6 +1,6 @@
 
 #pragma once
-#include <SDL3/SDL.h>
+#include "SDL.h"
 #define SOL_NO_THREAD_LOCAL
 
 #include <string>

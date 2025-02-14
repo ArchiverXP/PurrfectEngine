@@ -1,7 +1,6 @@
 
-#define SDL_MAIN_USE_CALLBACKS 1  /* use the callbacks instead of main() */
-#include <SDL3/SDL.h>
-#include <SDL3/SDL_main.h>
+ /* use the callbacks instead of main() */
+#include "SDL.h"
 #include "Game.h"
 #include "Engine.h"
 #include <iostream>
@@ -16,57 +15,49 @@ Engine eng;
 
 
 /* This function runs once at startup. */
-SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
-{
-    SDL_SetAppMetadata("Purrfect Engine", "1.0", "com.archiverxp.paengine");
+
+
+int main(int argc, char* argv[]){
     eng.InitEngine();
-    SDL_SetHint(SDL_HINT_RENDER_VSYNC, "1"); 
+
     eng.ReadLuaScript("scripts/1.lua");
-    if (!SDL_Init(SDL_INIT_VIDEO)) {
-        SDL_Log("Couldn't initialize SDL: %s", SDL_GetError());
-        return SDL_APP_FAILURE;
-    }
+    SDL_Event event;
 
-    return SDL_APP_CONTINUE;  /* carry on with the program! */
-}
+    Uint8 done = 0;
 
-/* This function runs when a new event (mouse input, keypresses, etc) occurs. */
-SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
-{
-    if (event->type == SDL_EVENT_QUIT) {
-        return SDL_APP_SUCCESS;  /* end the program, reporting success to the OS. */
-    }
 
-    if(event->type == SDL_EVENT_FINGER_DOWN){
-        eng.lua["Part"]();
+    while(!done)
+    {
         
-        eng.lua.set("state", state++);
+        while(SDL_PollEvent(&event) )
+        {
+
+            if(event.type == SDL_FINGERDOWN){
+
+                eng.lua["Part"]();
+        
+                eng.lua.set("state", state++);
+               //engine.ShowDialog("YAY SUCCESS!!! YEEEEEAHHHH", 160.0, 490.0);
+               
+            }
+
+            if(event.type == SDL_KEYDOWN){
+                eng.lua["Part"]();
+        
+                eng.lua.set("state", state++);
+            }
+
+            else if(event.type == SDL_QUIT){
+                    eng.ExitGame();
+                    return 0;
+
+            }
+
+        } 
+
+        eng.Refresh();
     }
 
-
-    if(event->type == SDL_EVENT_KEY_DOWN){
-        
-        eng.lua["Part"]();
-
-        eng.lua.set("state", state++);
-
-        
-    }
-    return SDL_APP_CONTINUE;  /* carry on with the program! */
+	
+	return 0;
 }
-
-/* This function runs once per frame, and is the heart of the program. */
-SDL_AppResult SDL_AppIterate(void *appstate)
-{
-    eng.Refresh();
-
-    return SDL_APP_CONTINUE;  /* carry on with the program! */
-}
-
-/* This function runs once at shutdown. */
-void SDL_AppQuit(void *appstate, SDL_AppResult result)
-{
-    eng.ExitGame();
-    return;
-}
-

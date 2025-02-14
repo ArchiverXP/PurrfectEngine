@@ -10,9 +10,9 @@ APPLICATION_NAME = PurrfectEngine
 
 
 PurrfectEngine_FILES = $(wildcard src/*.cpp) $(wildcard src/*/*.cpp)
-PurrfectEngine_LIBRARIES = lua
-PurrfectEngine_FRAMEWORKS = UIKit CoreGraphics MobileCoreServices QuartzCore CoreAudio AudioToolbox OpenGLES Foundation SDL3 SDL3_image SDL3_ttf SDL3_mixer
+PurrfectEngine_LIBRARIES = lua SDL2 SDL2_image SDL2_ttf SDL2_mixer
+PurrfectEngine_FRAMEWORKS = UIKit CoreGraphics MobileCoreServices ImageIO QuartzCore CoreAudio AudioToolbox OpenGLES Foundation 
 
-PurrfectEngine_CCFLAGS =  -IGameInclude --std=c++17 -I/usr/local/include/lua 
+PurrfectEngine_CCFLAGS =  -IGameInclude --std=c++17 -I/usr/local/include -I/usr/include/SDL2 -Isol
 
 include $(THEOS_MAKE_PATH)/application.mk
