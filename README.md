@@ -11,7 +11,7 @@ Makefile.mac: macOS
 
 Makefile: iOS (compile using theos)
 
-DO NOTE that for iOS you need the required frameworks, you can compile them using a Mac, Linux is not supported for iOS due to Xcode 12 requirements.
+DO NOTE that for iOS you need the required frameworks, you can compile them using a Mac.
 
 iOS 6 building will require LegacySDL3.
 
