@@ -10,3 +10,7 @@ Makefile.pc: Linux (probably windows???)
 Makefile.mac: macOS
 
 Makefile: iOS (compile using theos)
+
+DO NOTE that for iOS you need the required frameworks, you can compile them using a Mac, Linux is not supported for iOS due to Xcode 12 requirements.
+
+Releases will be in the releases tab.
