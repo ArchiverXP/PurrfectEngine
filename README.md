@@ -14,3 +14,8 @@ Makefile: iOS (compile using theos)
 DO NOTE that for iOS you need the required frameworks, you can compile them using a Mac.
 
 Releases will be in the releases tab.
+
+
+# CREDITS:
+
+90% Studios for the sprites, music, and background.
