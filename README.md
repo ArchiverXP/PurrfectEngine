@@ -1,11 +1,11 @@
 # PurrfectEngine
 A Visual Novel engine coded in C++ with Lua as its scripting language!
 
-# SDL 1.2 REQUIREMENTS:
+# SDL 1.2 BRANCH REQUIREMENTS:
 
-Windows: Windows 98+ with C++17 compiler
+Windows: Windows 95+
 
-Mac: OS X 10.4+ PPC/Intel with C++17 compiler
+Mac: Mac OS 9+
 
 Please note that this branch doesn't support iOS (at least not yet)
 
