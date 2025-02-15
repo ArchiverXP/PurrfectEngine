@@ -5,7 +5,7 @@ A Visual Novel engine coded in C++ with Lua as its scripting language!
 
 Windows: Windows XP and up.
 
-iOS: iOS 6 and up.
+iOS: iOS 5 and up.
 
 MacOS: 10.6 and up (untested)
 
