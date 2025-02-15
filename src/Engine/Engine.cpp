@@ -1,12 +1,11 @@
 
-#include "Game.h"
+
 #include "Engine.h"
 
 
 #define SCREEN_W 1280
 #define SCREEN_H 720
 
-Game gamer;
 
 Engine::Engine(){
 
