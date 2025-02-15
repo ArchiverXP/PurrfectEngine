@@ -9,7 +9,7 @@ CC = g++
 COMPILER_FLAGS = -w -IGameInclude -I/usr/local/include/lua 
 
 #LINKER_FLAGS specifies the libraries we're linking against
-LINKER_FLAGS = -lSDL -lSDL_image -lSDL_ttf -framework AppKit -llua -lSDL_mixer
+LINKER_FLAGS = -lSDL -lSDLmain -lSDL_image -lSDL_ttf -framework AppKit -llua -lSDL_mixer
 
 #OBJ_NAME specifies the name of our exectuable
 OBJ_NAME = PurrfectEngineSDL1
