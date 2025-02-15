@@ -1,9 +1,9 @@
 
 #pragma once
-#include "SDL.h"
-#include "SDL_image.h"
-#include "SDL_ttf.h"
-#include "SDL_mixer.h"
+#include <SDL/SDL.h>
+#include <SDL/SDL_image.h>
+#include <SDL/SDL_ttf.h>
+#include <SDL/SDL_mixer.h>
 #include "sol.hpp"
 #include <string>
 #include <vector>
@@ -20,19 +20,13 @@ public:
 
         void InitEngine();
 
-        void InitWindSurf(SDL_Window **winns, SDL_Renderer **rennie);
+        void InitWindSurf();
 
         int loaded;
 
         int i;
 
         sol::state lua;
-
-        SDL_Renderer *render2;
-
-        std::vector<SDL_Surface*> epicsurf2;
-
-        std::vector<SDL_Texture*> epicTexture;
 
         SDL_Rect dst;
 
@@ -52,7 +46,7 @@ public:
 
         void ReadLuaScript(std::string file);
 
-        void ClearEverythingButBG();
+        static void ClearText();
 
         static bool setSet();
 

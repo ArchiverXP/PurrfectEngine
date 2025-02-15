@@ -12,33 +12,15 @@ Engine::Engine(){
 
 }
 
-SDL_Window* window = NULL;
-
-SDL_Texture* Texture2 = NULL;
-
-SDL_Renderer* renderer = NULL;
-
-SDL_Texture* texture = NULL;
-
-SDL_Texture* text2 = NULL;
-
-SDL_Texture* test23 = NULL;
-
-SDL_Texture* TB = NULL;
-
-SDL_Texture* targetTexture = NULL;
-
-SDL_Texture* targetLayer2 = NULL;
-
-SDL_Texture* targetBG = NULL;
-
-SDL_Texture* targetTB = NULL;
+SDL_Surface* screen = NULL;
 
 SDL_Surface* epicsurface = NULL;
 
 SDL_Surface* epicersurface = NULL;
 
 SDL_Surface* BGSurface = NULL;
+
+SDL_Surface* dialog2 = NULL;
 
 static Mix_Music *music = NULL;
 
@@ -62,15 +44,19 @@ void Engine::InitEngine(){
     
     std::cout << SDL_GetError();
 
-    InitWindSurf(&window, &renderer);
+    InitWindSurf();
     
 
 
 }
 
-void Engine::InitWindSurf(SDL_Window **winns, SDL_Renderer **rennie){
-    SDL_Init(SDL_INIT_AUDIO);
-    SDL_CreateWindowAndRenderer(1280, 720, SDL_WINDOW_RESIZABLE,  winns, rennie);
+void Engine::InitWindSurf(){
+    SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
+
+    SDL_WM_SetCaption("Purrfect Engine (SDL 1.2)", NULL);
+    
+    screen = SDL_SetVideoMode(1280, 720, 0, SDL_RESIZABLE);
+
     IMG_Init(IMG_INIT_PNG);
 
     std::cout << SDL_GetError();
@@ -83,33 +69,40 @@ void Engine::LoadBG(std::string image){
 
     std::string image_PNG = "img/" + image + ".png";
 
-    epicsurface = IMG_Load(image_PNG.c_str());
-
-    test23 = SDL_CreateTextureFromSurface(renderer, epicsurface);
-
-    targetBG = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, 1280, 720);
+    BGSurface = IMG_Load(image_PNG.c_str());
 
 
-    SDL_SetRenderTarget(renderer, targetBG);
-
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_TRANSPARENT);
-
-    SDL_RenderClear(renderer);
-
-    SDL_RenderCopy(renderer, test23, NULL, NULL);
-
-    SDL_QueryTexture(test23, NULL, NULL, &rect3.w, &rect3.h);
+    SDL_BlitSurface(BGSurface, NULL, screen, &rect3);
 
     rect3.x = 0;
     rect3.y = 0;
 
-    
-
-    if(!test23){
+    if(!BGSurface){
         std::cout << "hey kid you didn't do the rendering right\n" << SDL_GetError();
     }
 
 }
+
+
+void Engine::LoadImage(std::string image, float x, float y){
+
+    std::string image_PNG = "img/" + image + ".png";
+
+    epicsurface = IMG_Load(image_PNG.c_str());
+
+
+    SDL_BlitSurface(epicsurface, NULL, screen, &rect2);
+
+
+    rect2.x = x;
+    rect2.y = y;
+
+    if(!epicsurface){
+        std::cout << "hey kid you didn't do the rendering right\n" << SDL_GetError();
+    }
+
+}
+
 
 
 void Engine::LoadTextbox(std::string image){
@@ -120,106 +113,39 @@ void Engine::LoadTextbox(std::string image){
 
     epicersurface = IMG_Load(image_PNG.c_str());
 
-    TB = SDL_CreateTextureFromSurface(renderer, epicersurface);
-
-    targetTB = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA4444, SDL_TEXTUREACCESS_TARGET, 1280, 720);
-
-    SDL_SetRenderTarget(renderer, targetTB);
-
-    SDL_SetTextureBlendMode(targetTB, SDL_BLENDMODE_BLEND);
-
-    SDL_RenderCopy(renderer, TB, NULL, NULL);
-
-
-
-    SDL_QueryTexture(TB, NULL, NULL, &rectangle.w, &rectangle.h);
-
-
 
     rectangle.x = 0;
-    rectangle.y = SCREEN_H / 1.33;
+    rectangle.y = 500;
 
 
+    SDL_BlitSurface(epicersurface, NULL, screen, &rectangle);
 
     if(!epicersurface){
         std::cout << "hey kid you didn't do the rendering right\n" << SDL_GetError();
     }
 
 }
-void Engine::LoadImage(std::string image, float x, float y){
-
-    estRect = {720, 1280, 0, 0};
-
-    std::string image_PNG = "img/" + image + ".png";
-
-    epicsurface = IMG_Load(image_PNG.c_str());
-
-    text2 = SDL_CreateTextureFromSurface(renderer, epicsurface);
-    
-    targetTexture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, 720, 1280);
-    
-    SDL_SetRenderTarget(renderer, targetTexture);
-
-    SDL_SetTextureBlendMode(targetTexture, SDL_BLENDMODE_BLEND);
-
-
-    SDL_RenderCopy(renderer, text2, NULL, NULL);
-
-    SDL_QueryTexture(text2, NULL, NULL, &rect2.w, &rect2.h);
 
 
 
-    rect2.x = x;
-    rect2.y = y;
-
-    if(!text2){
-        std::cout << "hey kid you didn't do the rendering right\n" << SDL_GetError();
-    }
-
-}
 
 void Engine::Refresh(){
 
-    SDL_SetRenderTarget(renderer, NULL);
-    
-    SDL_RenderClear(renderer);
-
-    SDL_RenderCopy(renderer, targetBG, NULL, &rect3);
-
-    SDL_RenderCopy(renderer, targetTexture, NULL, &rect2);
-
-    SDL_RenderCopy(renderer, targetTB, NULL, &rectangle);
-
-    SDL_RenderCopy(renderer, targetLayer2, NULL, &rect);
-
-
-    SDL_RenderSetLogicalSize(renderer, 1280, 720);
-
-    SDL_RenderPresent(renderer);
+    SDL_Flip(screen);
 
 
 }
 
 void Engine::ExitGame(){
 
-    SDL_DestroyTexture(targetTexture);
+    SDL_FreeSurface(epicsurface);
 
-
-    SDL_DestroyTexture(targetLayer2);
-
-
-    SDL_DestroyTexture(targetBG);
-
-
-    SDL_DestroyTexture(targetTB);
 
     IMG_Quit();
 
     SDL_Quit();
 
     TTF_Quit();
-
-    SDL_DestroyWindow(window);
 
 
 
@@ -233,27 +159,15 @@ void Engine::ShowDialog(std::string dialog, float x, float y){
 
     SDL_Color White = {255, 255, 255};
 
-    SDL_Surface* dialog2 = TTF_RenderText_Blended_Wrapped(Bani, dialog.c_str(), White, 0);
-
-    Texture2 = SDL_CreateTextureFromSurface(renderer, dialog2);
-
-    targetLayer2 = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, 720, 1280);
-
-    SDL_SetRenderTarget(renderer, targetLayer2);
-
-    SDL_SetTextureBlendMode(targetLayer2, SDL_BLENDMODE_BLEND);
-
-    SDL_RenderCopy(renderer, Texture2, NULL, NULL);
-
-    SDL_QueryTexture(Texture2, NULL, NULL, &rect.w, &rect.h);
-
-    
-
-
-    std::cout << SDL_GetError();
 
     rect.x = x;
     rect.y = y;
+
+    dialog2 = TTF_RenderText_Blended(Bani, dialog.c_str(), White);
+
+    SDL_BlitSurface(dialog2, NULL, screen, &rect);
+    
+    std::cout << SDL_GetError();
 
 
 }
@@ -278,6 +192,12 @@ void Engine::StateSetter(){
     i++;
 }
 
+void Engine::ClearText(){
+    SDL_BlitSurface(BGSurface, NULL, screen, &rect3);
+    SDL_BlitSurface(epicsurface, NULL, screen, &rect2);
+    SDL_BlitSurface(epicersurface, NULL, screen, &rectangle);
+
+}
 
 void Engine::ReadLuaScript(std::string file){
     
@@ -293,6 +213,8 @@ void Engine::ReadLuaScript(std::string file){
     lua.set_function("CharSay", &Engine::ShowDialog);
 
     lua.set_function("PlayMus", &Engine::PlayMusic);
+
+    lua.set_function("ClearTxt", &Engine::ClearText);
 
 
     lua.script_file(file);
