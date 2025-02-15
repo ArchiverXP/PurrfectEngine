@@ -1,8 +1,9 @@
 
  /* use the callbacks instead of main() */
 #include "SDL.h"
-#include "Game.h"
+
 #include "Engine.h"
+
 #include <iostream>
 
 #include <fstream>  
@@ -10,8 +11,6 @@
 /* We will use this renderer to draw into this window every frame. */
 
 int state = 2;
-
-Game game;
 
 Engine eng;
 
