@@ -4,7 +4,7 @@
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_ttf.h>
 #include <SDL/SDL_mixer.h>
-#include "sol.hpp"
+
 #include <string>
 #include <vector>
 #include <iostream>
@@ -25,8 +25,6 @@ public:
         int loaded;
 
         int i;
-
-        sol::state lua;
 
         SDL_Rect dst;
 

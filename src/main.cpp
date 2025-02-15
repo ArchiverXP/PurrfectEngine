@@ -3,6 +3,7 @@
 #include <SDL/SDL.h>
 #include "Game.h"
 #include "Engine.h"
+#include "LuaRead.h"
 #include <iostream>
 
 #include <fstream>  
@@ -15,13 +16,15 @@ Game game;
 
 Engine eng;
 
+LuaRead lua;
 
 /* This function runs once at startup. */
 
 
 int main(int argc, char* argv[]){
     eng.InitEngine();
-    eng.ReadLuaScript("scripts/1.lua");
+    
+    lua.ReadLuaFromFile("scripts/1.lua");
     
     SDL_Event event;
 
@@ -36,9 +39,8 @@ int main(int argc, char* argv[]){
 
 
             if(event.type == SDL_KEYDOWN){
-                eng.lua["Part"]();
-        
-                eng.lua.set("state", state++);
+
+                lua.LoadPart();
 
             }
 

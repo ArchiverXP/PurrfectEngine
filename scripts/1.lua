@@ -1,12 +1,13 @@
 
 LoadBG("Hallway");
-LoadTBox("textbox")
 LoadSprite("O02", 0, 0)
-CharSay("Olive:\n\nHi! Welcome to Purrfect Engine!", 1280 / 4.7, 720 / 1.3)
+LoadTBox("textbox")
+CharSay("Olive: Hi! Welcome to Purrfect Engine!", 272, 553)
 PlayMus("mus/Song-Opening.ogg")
-
+local state = 1;
 function Part()
-    CharSay("Olive:\n\nThis engine is still a work in progress, report any issues through\nthe github.", 1280 / 4.7, 720 / 1.3)
+    ClearText()
+    CharSay("Olive: This engine is still a work in progress, report any issues through the github.", 272, 553)
     state = state + 1
     CheckPart(state)
     print(state)
