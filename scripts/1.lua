@@ -4,7 +4,7 @@ LoadTBox("textbox")
 LoadSprite("O02", 0, 0)
 CharSay("Olive:\n\nHi! Welcome to Purrfect Engine!", 1280 / 4.7, 720 / 1.3)
 PlayMus("mus/Song-Opening.ogg")
-
+local state = 1;
 function Part()
     CharSay("Olive:\n\nThis engine is still a work in progress, report any issues through\nthe github.", 1280 / 4.7, 720 / 1.3)
     state = state + 1
