@@ -7,7 +7,7 @@ Windows: Windows XP and up.
 
 iOS: iOS 5 and up.
 
-MacOS: 10.6 and up (untested)
+MacOS: 10.5 and up (untested)
 
 If you want older, you can check out the SDL 1.2 branch.
 
