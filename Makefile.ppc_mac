@@ -2,17 +2,17 @@
 OBJS = $(wildcard src/*.cpp) $(wildcard src/*/*.cpp)
 
 #CC specifies which compiler we're using
-CC = clang++
+CC = g++
 
 #COMPILER_FLAGS specifies the additional compilation options we're using
 # -w suppresses all warnings
-COMPILER_FLAGS = -w -std=c++20 -IGameInclude -I/usr/local/include/lua -Isol
+COMPILER_FLAGS = -w -IGameInclude -I/usr/local/include/lua 
 
 #LINKER_FLAGS specifies the libraries we're linking against
-LINKER_FLAGS = -lSDL3 -lSDL3_image -F /Library/Frameworks/ -framework SDL3_ttf -llua -lSDL3_mixer
+LINKER_FLAGS = -lSDL -lSDL_image -lSDL_ttf -framework AppKit -llua -lSDL_mixer
 
 #OBJ_NAME specifies the name of our exectuable
-OBJ_NAME = PurrfectEngine
+OBJ_NAME = PurrfectEngineSDL1
 
 #This is the target that compiles our executable
 all: $(OBJS)
