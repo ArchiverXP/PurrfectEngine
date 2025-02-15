@@ -4,7 +4,7 @@
 #include "SDL_image.h"
 #include "SDL_ttf.h"
 #include "SDL_mixer.h"
-#include "sol.hpp"
+#include "LuaRead.h"
 #include <string>
 #include <vector>
 #include <iostream>
@@ -26,13 +26,7 @@ public:
 
         int i;
 
-        sol::state lua;
-
         SDL_Renderer *render2;
-
-        std::vector<SDL_Surface*> epicsurf2;
-
-        std::vector<SDL_Texture*> epicTexture;
 
         SDL_Rect dst;
 
@@ -40,18 +34,19 @@ public:
         
         void ExitGame();
         
-        static void LoadImage(std::string image, float x, float y);
+        void LoadImage(std::string image, float x, float y);
 
-        static void ShowDialog(std::string dialog,  float x, float y);
+        void ShowDialog(std::string dialog,  float x, float y);
 
-        static void LoadBG(std::string image);
+        void LoadBG(std::string image);
 
-        static void LoadTextbox(std::string image);
+        void LoadTextbox(std::string image);
 
-        static void PlayMusic(std::string mus);
+        void PlayMusic(std::string mus);
 
         void ReadLuaScript(std::string file);
 
+        
         void ClearEverythingButBG();
 
         static bool setSet();

@@ -5,6 +5,8 @@
 #include "Engine.h"
 #include <iostream>
 
+#include <fstream>  
+
 /* We will use this renderer to draw into this window every frame. */
 
 int state = 2;
@@ -13,14 +15,16 @@ Game game;
 
 Engine eng;
 
+LuaRead lua;
+
 
 /* This function runs once at startup. */
 
 
 int main(int argc, char* argv[]){
     eng.InitEngine();
-
-    eng.ReadLuaScript("scripts/1.lua");
+    lua.ReadLuaFromFile("scripts/1.lua");
+    
     SDL_Event event;
 
     Uint8 done = 0;
@@ -34,17 +38,14 @@ int main(int argc, char* argv[]){
 
             if(event.type == SDL_FINGERDOWN){
 
-                eng.lua["Part"]();
-        
-                eng.lua.set("state", state++);
+
                //engine.ShowDialog("YAY SUCCESS!!! YEEEEEAHHHH", 160.0, 490.0);
                
             }
 
             if(event.type == SDL_KEYDOWN){
-                eng.lua["Part"]();
-        
-                eng.lua.set("state", state++);
+                lua.LoadPart();
+
             }
 
             else if(event.type == SDL_QUIT){
@@ -58,6 +59,6 @@ int main(int argc, char* argv[]){
         eng.Refresh();
     }
 
-	
 	return 0;
+	
 }

@@ -1,8 +1,6 @@
 
 #pragma once
 #include "SDL.h"
-#define SOL_NO_THREAD_LOCAL
-
 #include <string>
 #include <iostream>
 #include <vector>

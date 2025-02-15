@@ -53,6 +53,7 @@ SDL_Rect rect3;
 SDL_Rect rectangle;
 
 
+
 void Engine::InitEngine(){
 
 
@@ -278,28 +279,6 @@ void Engine::StateSetter(){
     i++;
 }
 
-
-void Engine::ReadLuaScript(std::string file){
-    
-
-    lua.open_libraries(sol::lib::base);
-
-	lua.set_function("LoadBG", &Engine::LoadBG);
-
-    lua.set_function("LoadSprite", &Engine::LoadImage);
-
-    lua.set_function("LoadTBox", &Engine::LoadTextbox);
-
-    lua.set_function("CharSay", &Engine::ShowDialog);
-
-    lua.set_function("PlayMus", &Engine::PlayMusic);
-
-
-    lua.script_file(file);
-    
-
-
-}
 
 void Engine::EventKey(){
 
