@@ -3,9 +3,9 @@ A Visual Novel engine coded in C++ with Lua as its scripting language!
 
 # SDL 1.2 REQUIREMENTS:
 
-Windows: Windows 95+
+Windows: Windows 98+ with C++17 compiler
 
-Mac: Mac OS 9 and up (untested but it should work)
+Mac: OS X 10.4+ PPC/Intel with C++17 compiler
 
 Please note that this branch doesn't support iOS (at least not yet)
 
