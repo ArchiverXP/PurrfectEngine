@@ -38,7 +38,7 @@ int main(int argc, char* argv[]){
 
             if(event.type == SDL_FINGERDOWN){
 
-
+                lua.LoadPart();
                //engine.ShowDialog("YAY SUCCESS!!! YEEEEEAHHHH", 160.0, 490.0);
                
             }
