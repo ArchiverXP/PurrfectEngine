@@ -6,7 +6,7 @@ CC = clang++
 
 #COMPILER_FLAGS specifies the additional compilation options we're using
 # -w suppresses all warnings
-COMPILER_FLAGS = -w -std=c++20 -IGameInclude -I/usr/local/include/lua
+COMPILER_FLAGS = -w -IGameInclude -I/usr/local/include/lua
 
 #LINKER_FLAGS specifies the libraries we're linking against
 LINKER_FLAGS = -lSDL2 -lSDL2_image -F /Library/Frameworks/ -framework SDL2_ttf -llua -lSDL2_mixer
