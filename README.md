@@ -15,7 +15,13 @@ If you want older, you can check out the SDL 1.2 branch.
 
 Get the dependencies (lua, sdl2, sdl2_image, sdl2_ttf and sdl2_mixer), and compile.
 
-Makefile.pc: Linux (probably windows???)
+CMAKE (Windows):
+
+Get CMake and compile Purrfect Engine.
+
+Don't forget to set your SDL prefix variables accordingly in the CMakeLists file.
+
+Makefile.pc: Linux
 
 Makefile.mac: macOS
 
