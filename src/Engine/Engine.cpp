@@ -72,7 +72,8 @@ void Engine::InitWindSurf(SDL_Window **winns, SDL_Renderer **rennie){
     SDL_Init(SDL_INIT_AUDIO);
     SDL_CreateWindowAndRenderer(1280, 720, SDL_WINDOW_RESIZABLE,  winns, rennie);
     IMG_Init(IMG_INIT_PNG);
-    
+    SDL_SetHint(SDL_HINT_ORIENTATIONS, "LandscapeLeft LandscapeRight");
+    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "2");
 
     std::cout << SDL_GetError();
     
@@ -89,8 +90,6 @@ void Engine::LoadBG(std::string image){
     test23 = SDL_CreateTextureFromSurface(renderer, epicsurface);
 
     targetBG = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, 1280, 720);
-
-    SDL_SetTextureScaleMode(targetBG, SDL_ScaleModeBest);
 
     SDL_SetRenderTarget(renderer, targetBG);
 
@@ -126,15 +125,11 @@ void Engine::LoadTextbox(std::string image){
 
     targetTB = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA4444, SDL_TEXTUREACCESS_TARGET, 1280, 720);
 
-    SDL_SetTextureScaleMode(targetTB, SDL_ScaleModeBest);
-    
     SDL_SetRenderTarget(renderer, targetTB);
 
     SDL_SetTextureBlendMode(targetTB, SDL_BLENDMODE_BLEND);
 
     SDL_RenderCopy(renderer, TB, NULL, NULL);
-
-
 
     SDL_QueryTexture(TB, NULL, NULL, &rectangle.w, &rectangle.h);
 
@@ -160,12 +155,8 @@ void Engine::LoadImage(std::string image, float x, float y){
 
     text2 = SDL_CreateTextureFromSurface(renderer, epicsurface);
     
-    SDL_SetTextureScaleMode(text2, SDL_ScaleModeBest);
-
     targetTexture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, 720, 1280);
 
-    SDL_SetTextureScaleMode(targetTexture, SDL_ScaleModeBest);
-    
     SDL_SetRenderTarget(renderer, targetTexture);
 
     SDL_SetTextureBlendMode(targetTexture, SDL_BLENDMODE_BLEND);
@@ -245,8 +236,6 @@ void Engine::ShowDialog(std::string dialog, float x, float y){
 
     Texture2 = SDL_CreateTextureFromSurface(renderer, dialog2);
 
-    SDL_SetTextureScaleMode(Texture2, SDL_ScaleModeBest);
-    
     targetLayer2 = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, 720, 1280);
 
     SDL_SetRenderTarget(renderer, targetLayer2);
