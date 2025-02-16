@@ -21,7 +21,7 @@ Makefile.mac: macOS
 
 Makefile: iOS (compile using theos)
 
-DO NOTE that for iOS you need the required frameworks, you can compile them using a Mac.
+DO NOTE that for iOS you need the required libraries, you can compile them using a Mac.
 
 Releases will be in the releases tab.
 
