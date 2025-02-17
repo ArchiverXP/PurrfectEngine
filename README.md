@@ -22,7 +22,12 @@ If you want to compile with Visual C++ 6, you can configure with:
 ```
 cmake <path-to-source> -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=RelWithDebInfo
 ```
-Then run nmake, don't forget to run (path to visual c++ 6)/BIN/VCVARS32.BAT x86!
+Then run nmake, don't forget to run (path to visual c++ 6)/BIN/VCVARS32.BAT x86 and set your SDLDIR in your environment variables!
+
+Example:
+```
+set SDLDIR=C:/users/allison/SDL/
+```
 
 # MAKEFILES:
 
