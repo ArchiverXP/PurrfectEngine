@@ -3,7 +3,7 @@ A Visual Novel engine coded in C++ with Lua as its scripting language!
 
 # COMPATIBILITY:
 
-Windows: Windows XP and up.
+Windows: Windows XP and up. (Do note that Windows is buggy with maximizing the window)
 
 iOS: iOS 5 and up.
 
