@@ -21,6 +21,8 @@ Get CMake and compile Purrfect Engine.
 
 Don't forget to set your SDL prefix variables accordingly in the CMakeLists file.
 
+You also need Lua from here: https://github.com/walterschell/Lua
+
 Makefile.pc: Linux
 
 Makefile.mac: macOS
