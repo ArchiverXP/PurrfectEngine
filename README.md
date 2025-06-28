@@ -1,4 +1,7 @@
 # PurrfectEngine
+# OBSOLETE: I NO LONGER DO ANYTHING WITH PURRFECT APAWCALYPSE
+
+
 A Visual Novel engine coded in C++ with Lua as its scripting language!
 
 # COMPATIBILITY:
